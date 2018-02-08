@@ -63,7 +63,7 @@ Returns the owner of a particular token, I think this should be optional as not 
 
 ### function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s) public payable
 
-A function which allows a user to sell a batch of non-fungible tokens without paying for the gas fee (only the buyer has to). This is achieved by signing an attestation containing the amount of tokens to sell, the price and the signature. A buyer can then pay for the deal in one transaction by attaching the appropriate ether to satisfy the deal.
+A function which allows a user to sell a batch of non-fungible tokens without paying for the gas fee (only the buyer has to). This is achieved by signing an attestation containing the amount of tokens to sell, the contract address, an expiry timestamp, the price and a prefix containing the ERC spec name and chain id. A buyer can then pay for the deal in one transaction by attaching the appropriate ether to satisfy the deal.
 
 This design is also more efficient as it allows orders to be done offline until settlement as opposed to creating orders in a smart contract and updating them. The expiry timestamp protects the seller against people using old orders.
 
