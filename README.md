@@ -3,22 +3,22 @@ An example implementation of our new ERC spec draft.
 
 Test it out here: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0cd42c3c2e1ae5f0005
 
-contract ERC
-{
-    event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
-    event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
+    contract ERC
+    {
+        event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
+        event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
 
-    function name() constant returns (string name);
-    function symbol() constant returns (string symbol);
-    function balanceOf(address _owner) public view returns (uint256[] _balances);
-    function ownerOf(uint256 _tokenId) public view returns (address _owner);
-    function transfer(address _to, uint256[] _tokens) public;
-    function transferFrom(address _from, address _to, uint256[] _tokens) public;
+        function name() constant returns (string name);
+        function symbol() constant returns (string symbol);
+        function balanceOf(address _owner) public view returns (uint256[] _balances);
+        function ownerOf(uint256 _tokenId) public view returns (address _owner);
+        function transfer(address _to, uint256[] _tokens) public;
+        function transferFrom(address _from, address _to, uint256[] _tokens) public;
 
-    //optional
-    function totalSupply() constant returns (uint256 totalSupply);
-    function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s)      public payable
-}
+        //optional
+        function totalSupply() constant returns (uint256 totalSupply);
+        function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s)      public payable
+    }
 
 ## Summary
 A simple non fungible token standard that allows batching tokens into lots and settling p2p atomic transfers in one transaction.
