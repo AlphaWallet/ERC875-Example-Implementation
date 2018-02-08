@@ -11,13 +11,13 @@ Test it out here: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0c
         function name() constant returns (string name);
         function symbol() constant returns (string symbol);
         function balanceOf(address _owner) public view returns (uint256[] _balances);
-        function ownerOf(uint256 _tokenId) public view returns (address _owner);
         function transfer(address _to, uint256[] _tokens) public;
         function transferFrom(address _from, address _to, uint256[] _tokens) public;
 
         //optional
         function totalSupply() constant returns (uint256 totalSupply);
-        function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s)      public payable
+        function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s) public payable
+        function ownerOf(uint256 _tokenId) public view returns (address _owner);
     }
 
 ## Summary
@@ -51,9 +51,15 @@ Transfer your unique tokens to an address by adding an array of the token indice
 
 Transfer a variable amount of tokens from one user to another. This can be done from an authorised party with a specified key e.g. contract owner.
 
+## Optional functions
+
 ### function totalSupply() constant returns (uint256 totalSupply);
 
 Returns the total amount of tokens in the given contract, this should be optional as assets might be allocated and issued on the fly. This means that supply is not always fixed.
+
+### function ownerOf(uint256 _tokenId) public view returns (address _owner);
+
+Returns the owner of a particular token, I think this should be optional as not every token contract will need to track the owner of a unique token and it costs gas to loop and map the token id owners each time the balances change. 
 
 ### function trade(uint256 expiryTimeStamp, uint256[] tokenIndices, uint8 v, bytes32 r, bytes32 s) public payable
 
