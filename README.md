@@ -29,7 +29,7 @@ A simple non fungible token standard that allows batching tokens into lots and s
 While other standards allow the user to transfer a non-fungible token, they require one transaction per token, this is heavy on gas and partially responsible for clogging the ethereum network. There are also few definitions for how to do a simple atomic swap.
 
 ## Rinkeby example
-This standard has been implemented in an example contract on rinkeby: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0cd42c3c2e1ae5f0005 you can also find the code in this repository:
+This standard has been implemented in an example contract on rinkeby: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0cd42c3c2e1ae5f0005
 
 ## Specification
 
