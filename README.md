@@ -1,4 +1,4 @@
-# ERC-Example
+# ERC875-Example
 An example implementation of our new ERC spec draft.
 
 Test it out here: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0cd42c3c2e1ae5f0005
