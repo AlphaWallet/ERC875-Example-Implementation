@@ -1,6 +1,8 @@
 # ERC875-Example
 An example implementation of our new ERC spec draft.
 
+Create your own here: https://alpha-wallet.github.io/ERC875-ticket-factory/TicketFactory.html
+
 Test it out here: https://rinkeby.etherscan.io/address/0xffab5ce7c012bc942f5ca0cd42c3c2e1ae5f0005
 
 Referenced here: https://github.com/ethereum/EIPs/issues/875
