@@ -19,6 +19,8 @@ contract Token is ERC
 {
     uint totalTickets;
     mapping(address => uint256[]) inventory;
+    // Owner of account approves the transfer of specific indices by another account
+    mapping(address => mapping (address => uint256[])) allowed;
     uint16 ticketIndex = 0; //to track mapping in tickets
     uint expiryTimeStamp;
     address owner;   // the address that calls selfdestruct() and takes fees
@@ -31,6 +33,7 @@ contract Token is ERC
 
     event Transfer(address indexed _from, address indexed _to, uint256[] tokenIndices);
     event TransferFrom(address indexed _from, address indexed _to, uint _value);
+    event Approval(address indexed owner, address indexed _approved, uint indexed ticketCount);
 
     modifier adminOnly()
     {
@@ -177,18 +180,44 @@ contract Token is ERC
         }
     }
 
-    function transferFrom(address _from, address _to, uint256[] tokenIndices)
-        adminOnly public
+    function transferFrom(address _from, address _to, uint256[] tokenIndices) public
     {
         bool isadmin = msg.sender == admin;
         for(uint i = 0; i < tokenIndices.length; i++)
         {
             require(inventory[_from][i] != 0 || isadmin);
+            require(allowed[_from][msg.sender][i] == tokenIndices[i] || isadmin);
             //pushes each element with ordering
             uint index = uint(tokenIndices[i]);
             inventory[_to].push(inventory[msg.sender][index]);
             inventory[_from][index] = 0;
+            delete allowed[_from][msg.sender][i];
         }
+    }
+
+    // Function can be used by external smart contract to ensure it is allowed to move NFTs
+    function checkAllowed(address owner, address proxy) public view returns (uint16[])
+    {
+        return allowed[owner][proxy];
+    }
+
+    // This function approves specific NTFs to be available for use in an external contract
+    // See transferFromContract() above.
+    function approve(address _approved, uint256[] tokenIndices) public
+    {
+        // allow caller to cancel approval - each approval call resets previous approval
+        // putting 0 indices resets approval
+        delete allowed[msg.sender][_approved];
+
+        for(uint i = 0; i < tokenIndices.length; i++)
+        {
+            uint index = uint(tokenIndices[i]);
+            //check token ownership, abort function and revert changes if any problems
+            if(inventory[msg.sender][index] == 0) revert("No token at index");
+        }
+        //Confirmed that msg.sender owns these tokens; can now allow external contract to move them
+        allowed[msg.sender][_approved] = ticketIndices;
+        emit Approval(msg.sender, _approved, ticketIndices.length);
     }
 
     function endContract() public
