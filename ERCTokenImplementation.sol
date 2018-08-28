@@ -17,11 +17,11 @@ contract ERC
 pragma solidity ^0.4.17;
 contract Token is ERC
 {
-    uint totalTickets;
+    uint totalTokenss;
     mapping(address => uint256[]) inventory;
     // Owner of account approves the transfer of specific indices by another account
     mapping(address => mapping (address => uint256[])) allowed;
-    uint16 ticketIndex = 0; //to track mapping in tickets
+    uint16 tokenIndex = 0; 
     uint expiryTimeStamp;
     address owner;   // the address that calls selfdestruct() and takes fees
     address admin;
@@ -29,11 +29,11 @@ contract Token is ERC
     uint numOfTransfers = 0;
     string public name;
     string public symbol;
-    uint8 public constant decimals = 0; //no decimals as tickets cannot be split
+    uint8 public constant decimals = 0; //no decimals as tokens cannot be split
 
     event Transfer(address indexed _from, address indexed _to, uint256[] tokenIndices);
     event TransferFrom(address indexed _from, address indexed _to, uint _value);
-    event Approval(address indexed owner, address indexed _approved, uint indexed ticketCount);
+    event Approval(address indexed owner, address indexed _approved, uint indexed tokenCount);
 
     modifier adminOnly()
     {
@@ -51,8 +51,8 @@ contract Token is ERC
         string eventSymbol,
         address adminAddr) public
     {
-        totalTickets = numberOfTokens.length;
-        //assign some tickets to event admin
+        totalTokenss = numberOfTokens.length;
+        //assign some tokens to event admin
         expiryTimeStamp = expiry;
         owner = msg.sender;
         admin = adminAddr;
@@ -85,11 +85,11 @@ contract Token is ERC
         address seller = ecrecover(message, v, r, s);
 
         for(uint i = 0; i < tokenIndices.length; i++)
-        { // transfer each individual tickets in the ask order
+        { // transfer each individual tokenss in the ask order
             uint index = uint(tokenIndices[i]);
-            require((inventory[seller][index] > 0)); // 0 means ticket sold.
+            require((inventory[seller][index] > 0)); // 0 means token sold.
             inventory[msg.sender].push(inventory[seller][index]);
-            inventory[seller][index] = 0; // 0 means ticket sold.
+            inventory[seller][index] = 0; // 0 means token sold.
         }
         seller.transfer(msg.value);
     }
@@ -216,8 +216,8 @@ contract Token is ERC
             if(inventory[msg.sender][index] == 0) revert("No token at index");
         }
         //Confirmed that msg.sender owns these tokens; can now allow external contract to move them
-        allowed[msg.sender][_approved] = ticketIndices;
-        emit Approval(msg.sender, _approved, ticketIndices.length);
+        allowed[msg.sender][_approved] = tokenIndices;
+        emit Approval(msg.sender, _approved, tokenIndices.length);
     }
 
     function endContract() public
