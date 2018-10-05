@@ -17,7 +17,7 @@ contract ERC
 pragma solidity ^0.4.17;
 contract Token is ERC
 {
-    uint totalTokenss;
+    uint totalTokens;
     mapping(address => uint256[]) inventory;
     // Owner of account approves the transfer of specific indices by another account
     mapping(address => mapping (address => uint256[])) allowed;
@@ -51,7 +51,7 @@ contract Token is ERC
         string eventSymbol,
         address adminAddr) public
     {
-        totalTokenss = numberOfTokens.length;
+        totalTokens = numberOfTokens.length;
         //assign some tokens to event admin
         expiryTimeStamp = expiry;
         owner = msg.sender;
