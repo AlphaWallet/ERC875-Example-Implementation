@@ -197,7 +197,7 @@ contract Token is ERC875
             require(inventory[_from][i] != 0 || isadmin);
             //pushes each element with ordering
             uint index = uint(tokenIndices[i]);
-            inventory[_to].push(inventory[msg.sender][index]);
+            inventory[_to].push(inventory[_from][index]);
             inventory[_from][index] = 0;
         }
     }
